@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-01T09:08:05.009Z</updated>
+  <updated>2018-12-01T09:28:56.839Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,11 +21,13 @@
     <link href="http://yoursite.com/2018/12/01/git/"/>
     <id>http://yoursite.com/2018/12/01/git/</id>
     <published>2018-12-01T07:08:10.000Z</published>
-    <updated>2018-12-01T09:08:05.009Z</updated>
+    <updated>2018-12-01T09:28:56.839Z</updated>
     
     <summary type="html">
     
     </summary>
+    
+      <category term="git" scheme="http://yoursite.com/categories/git/"/>
     
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
@@ -37,7 +39,7 @@
     <link href="http://yoursite.com/2018/12/01/markdown/"/>
     <id>http://yoursite.com/2018/12/01/markdown/</id>
     <published>2018-12-01T07:02:41.000Z</published>
-    <updated>2018-12-01T08:48:10.820Z</updated>
+    <updated>2018-12-01T09:28:47.354Z</updated>
     
     <summary type="html">
     
@@ -53,6 +55,8 @@
       
     
     </summary>
+    
+      <category term="markdown" scheme="http://yoursite.com/categories/markdown/"/>
     
     
       <category term="markdown" scheme="http://yoursite.com/tags/markdown/"/>
