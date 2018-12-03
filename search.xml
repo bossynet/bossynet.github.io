@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[git的使用]]></title>
     <url>%2F2018%2F12%2F01%2Fgit%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[一、git的优点 防止代码丢失。 同步到远程服务器。 团队合作。 代码还原。 记录代码版本。 二、常用的操作命令 git ini 初始化git仓库。 git status 查看状态。 git add 将文件添加到git的暂存区里面。 git commit 将暂存区的文件提交到git仓库 git commit -m “添加提交的注释” git log 查看日志 git branch 查看当前分支 git branch hi 创建一个hi分支 git branch -d hi 删除hi分支 三、和远端服务器协同工作.这里以github为例说明。 git clone https://github.com/bossynet/bossynet.github.io.git 将代码克隆到本地。 SSH授权. 同步到github 上需要公钥和私钥。 生成密钥 ssh-keygen -t rsa 然后将公钥文件中的密钥放到github的Setting中进行设置贴到里面。最后验证是否授权 ssh -T git@github.com 如下图： git push 将本代码提交到github上面去。 git pull 将远程代码更新下来。 git push orinig a 提交到a分支。 git merge 合并分支 四、GitHub 全球社交编程网站（简单介绍）主要作用 托管代码 多人合作 个人博客 个人简历 常用菜单说明 star 收藏 fork 复制 watch 观察 （点击后可以看到被watch项目的更新状态） gists 分享代码片段 pull request 请求合并 Issue 发现bug的时候可以进行Issue 五、参考资料 git简易指南 git详细教程 视频教程]]></content>
       <categories>
         <category>git</category>
       </categories>
@@ -21,10 +21,5 @@
       <tags>
         <tag>markdown</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F11%2F30%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
