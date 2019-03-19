@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[oracle常用命令]]></title>
+    <url>%2F2019%2F03%2F18%2Foracle%E5%B8%B8%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[一、创建表空间、用户及授权 创建临时表空间 123456create temporary tablespace ipm_temptempfile &apos;F:\app\Administrator\oradata\ipm_temp.dbf&apos;size 1024m autoextend on next 256m maxsize 2048m extent management local; 创建表空间 1234567create tablespace ipm_data logging datafile &apos;F:\app\Administrator\ipm_data.dbf&apos;size 1024m autoextend on next 256m maxsize 2048m extent management local; 创建用户并指定表空间 123create user ipm identified by ipm default tablespace ipm_data temporary tablespace ipm_temp; 给用户授予权限 1grant connect,resource,dba to ipm; 数据库导入导出 12imp xxx/xxx@orcl full=y file= F:\dmp\XXX.dmp ignore=yexp xxx/xxx@orcl file= F:\dmp\XXX.dmp 二、常用语句点 查看最大与当前连接数 1234--当前的连接数select count(*) from v$process;--数据库允许的最大连接数select value from v$parameter where name = &apos;processes&apos;; 修改连接数 1alter system set processes = 1000 scope = spfile 重启数据库 12shutdown immediate;startup; 三、导出空表 查看数据库设置，是否支持导出空表 1show parameter deferred_segment_creation; 修改数据参数，支持到处空表 12--该方法只对修改以后的表有效alter system set deferred_segment_creation=false; 修改参数之前的表的处理 12select ‘alter table ‘||table_name||’ allocate extent;’ from user_tables where num_rows=0;--将输出的SQL复制执行 四、批量删除业务表 12345begin for t in (select table_name from user_tables where table_name like &apos;PRP%&apos; ) loop execute immediate &apos;truncate table &apos;||t.table_name; end loop;end; 五、数据误删除解决办法 delete误删除的解决方法。 删除数据还原 1234-- 查询数据从的数据select * from 表名 as of timestamp to_timestamp(&apos;删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)--把数据重新插入insert into 表名 (select * from 表名 as of timestamp to_timestamp(&apos;删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)); 表结构未改变可以整个表回闪 12345 alter table 表名 enable row movement --恢复表数据flashback table 表名 to timestamp to_timestamp(删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)--关闭行移动功能alter table 表名 disable row movement dorp误删除的解决方法 知道删除哪个表 1flashback table 原表名 to before drop 忘记删除的表 1flashback table &quot;回收站中的表名(如：Bin$DSbdfd4rdfdfdfegdfsf==$0)&quot; to before drop rename to 新表名 整个数据库闪回功能，可以使数据库回到过去的某一个状态。 123alter database flashback on;flashback database to scn SCNNO;flashback database to timestamp to_timestamp(&apos;2007-2-12 12:00:00&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;); 参考： 数据库误删除解决办法]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[git的使用]]></title>
     <url>%2F2018%2F12%2F01%2Fgit%2F</url>
     <content type="text"><![CDATA[一、git的优点 防止代码丢失。 同步到远程服务器。 团队合作。 代码还原。 记录代码版本。 二、常用的操作命令 git ini 初始化git仓库。 git status 查看状态。 git add 将文件添加到git的暂存区里面。 git commit 将暂存区的文件提交到git仓库 git commit -m “添加提交的注释” git log 查看日志 git branch 查看当前分支 git branch hi 创建一个hi分支 git branch -d hi 删除hi分支 三、和远端服务器协同工作.这里以github为例说明。 git clone https://github.com/bossynet/bossynet.github.io.git 将代码克隆到本地。 SSH授权. 同步到github 上需要公钥和私钥。 生成密钥 ssh-keygen -t rsa 然后将公钥文件中的密钥放到github的Setting中进行设置贴到里面。最后验证是否授权 ssh -T git@github.com 如下图： git push 将本代码提交到github上面去。 git pull 将远程代码更新下来。 git push orinig a 提交到a分支。 git merge 合并分支 四、GitHub 全球社交编程网站（简单介绍）主要作用 托管代码 多人合作 个人博客 个人简历 常用菜单说明 star 收藏 fork 复制 watch 观察 （点击后可以看到被watch项目的更新状态） gists 分享代码片段 pull request 请求合并 Issue 发现bug的时候可以进行Issue 五、参考资料 git简易指南 git详细教程 视频教程]]></content>
