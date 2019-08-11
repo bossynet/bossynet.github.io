@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Firewall相关指令]]></title>
+    <url>%2F2019%2F08%2F10%2Flinux%2Flinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[一、防火墙设置1、Centos 7之前的防火墙基本都是需改iptables。 1234service iptables status 查看防火墙状态service iptables start 开启防火墙service iptables stop 关闭防火墙service iptables restart 重启防火墙 开放端口有两种方式：一、命令添加开放端口。二、修改配置文件。 123命令添加：iptables -I INPUT 5 -m state --state NEW -m tcp -ptcp --dport 8080 -j ACCEPT 修改配置文件添加开发端口，保存后重启防火墙。 vi /etc/sysconfig/iptablesservice iptables restart 2、Centos 7之后的防火墙升级为Firewall，取代了之前的iptables 1234567891011121314151617firewall-cmd --state 查看防火墙状态firewall-cmd --reload 重新载入配置，添加端口后要重载配置。firewall-cmd --get-zones 列出支持的zonefirewall-cmd --get-services 列出支持的服务firewall-cmd --list-ports 列出支持的端口firewall-cmd --query-service ftp 查看ftp是否支持firewall-cmd --add-service=ftp 开发ftp服务firewall-cmd --add-service=ftp --permanent 永久开发ftpfirewall-cmd --remove-service=ftp --permanent 永久移除ftpfirewall-cmd --add-port=80/tcp --permanent 添加80端口iptables -L -n 查看规则，这个命令是和iptables的相同的man firewall-cmd 查看帮助systemctl stop firewalld 关闭防火墙systemctl start firewalld 开启防火墙systemctl status firewalld 查看防火墙状态systemctl restart firewalld 重启防火墙systemctl disable firewalld 开机关闭防火墙]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Firewall</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[oracle常用命令]]></title>
-    <url>%2F2019%2F03%2F18%2Foracle%E5%B8%B8%E7%94%A8%2F</url>
+    <url>%2F2019%2F03%2F18%2Foracle%2Foracle%E5%B8%B8%E7%94%A8%2F</url>
     <content type="text"><![CDATA[一、创建表空间、用户及授权 创建临时表空间 123456create temporary tablespace ipm_temptempfile &apos;F:\app\Administrator\oradata\ipm_temp.dbf&apos;size 1024m autoextend on next 256m maxsize 2048m extent management local; 创建表空间 1234567create tablespace ipm_data logging datafile &apos;F:\app\Administrator\ipm_data.dbf&apos;size 1024m autoextend on next 256m maxsize 2048m extent management local; 创建用户并指定表空间 123create user ipm identified by ipm default tablespace ipm_data temporary tablespace ipm_temp; 给用户授予权限 1grant connect,resource,dba to ipm; 数据库导入导出 12imp xxx/xxx@orcl full=y file= F:\dmp\XXX.dmp ignore=yexp xxx/xxx@orcl file= F:\dmp\XXX.dmp 二、常用语句点 查看最大与当前连接数 1234--当前的连接数select count(*) from v$process;--数据库允许的最大连接数select value from v$parameter where name = &apos;processes&apos;; 修改连接数 1alter system set processes = 1000 scope = spfile 重启数据库 12shutdown immediate;startup; 三、导出空表 查看数据库设置，是否支持导出空表 1show parameter deferred_segment_creation; 修改数据参数，支持到处空表 12--该方法只对修改以后的表有效alter system set deferred_segment_creation=false; 修改参数之前的表的处理 12select ‘alter table ‘||table_name||’ allocate extent;’ from user_tables where num_rows=0;--将输出的SQL复制执行 四、批量删除业务表 12345begin for t in (select table_name from user_tables where table_name like &apos;PRP%&apos; ) loop execute immediate &apos;truncate table &apos;||t.table_name; end loop;end; 五、数据误删除解决办法 delete误删除的解决方法。 删除数据还原 1234-- 查询数据从的数据select * from 表名 as of timestamp to_timestamp(&apos;删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)--把数据重新插入insert into 表名 (select * from 表名 as of timestamp to_timestamp(&apos;删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)); 表结构未改变可以整个表回闪 12345 alter table 表名 enable row movement --恢复表数据flashback table 表名 to timestamp to_timestamp(删除时间点&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;)--关闭行移动功能alter table 表名 disable row movement dorp误删除的解决方法 知道删除哪个表 1flashback table 原表名 to before drop 忘记删除的表 1flashback table &quot;回收站中的表名(如：Bin$DSbdfd4rdfdfdfegdfsf==$0)&quot; to before drop rename to 新表名 整个数据库闪回功能，可以使数据库回到过去的某一个状态。 123alter database flashback on;flashback database to scn SCNNO;flashback database to timestamp to_timestamp(&apos;2007-2-12 12:00:00&apos;,&apos;yyyy-mm-dd hh24:mi:ss&apos;); 参考： 数据库误删除解决办法]]></content>
       <categories>
         <category>oracle</category>
